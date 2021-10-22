@@ -16,29 +16,33 @@ namespace Scripto
         static int attackCount = 0; // Not touch
         static string method = "POST"; // GET or POST
         static string postdata = $"username=PHB&password=123456789"; // Post form data.
-
+        static string ProxyListUrl = "https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-https.txt";
+        static bool DiscordRichPresence = true;
         static DiscordRpcClient client;
 
         static void Main(string[] args)
         {
             /* Rich Presence */
-            client = new DiscordRpcClient("900888004460179456");
-            client.Initialize();
-            client.SetPresence(new RichPresence()
+            if (DiscordRichPresence)
             {
-                Details = "Attacking",
-                State = $"Attack on {Url}",
-                Assets = new Assets()
+                client = new DiscordRpcClient("900888004460179456");
+                client.Initialize();
+                client.SetPresence(new RichPresence()
                 {
-                    LargeImageKey = "ih8ptjv",
-                    LargeImageText = "by HAHAHA",
-                    SmallImageKey = "ih8ptjv"
-                }
-            });
+                    Details = "Attacking",
+                    State = $"Attack on {Url}",
+                    Assets = new Assets()
+                    {
+                        LargeImageKey = "ih8ptjv",
+                        LargeImageText = "by HAHAHA",
+                        SmallImageKey = "ih8ptjv"
+                    }
+                });
+            }
 
             if (proxyEnabled)
             {
-                String proxylist = new WebClient().DownloadString("https://raw.githubusercontent.com/jetkai/proxy-list/main/online-proxies/txt/proxies-https.txt");
+                String proxylist = new WebClient().DownloadString(ProxyListUrl);
                 String[] proxySplitted = proxylist.Split("\n");
                 for (int i = 0; i < proxySplitted.Length; i++)
                 {
